@@ -1,4 +1,4 @@
-const frontend = 'http://localhost:8080'
+const frontend = 'https://hw7-frontend.surge.sh'
 
 const cookieKey = 'sid'
 const sessions = {}
