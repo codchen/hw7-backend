@@ -10,6 +10,9 @@ const sendArticlesByAuthor = (author, res) => {
 			'comments._id': 0
 		} 
 	}).exec((err, articles) => {
+		if (!articles) {
+			return res.send({ articles: [] })
+		}
 		return res.send({ articles })
 	})
 }
@@ -19,7 +22,6 @@ const sendArticleById = (_id, res) => {
 		counter: 0,
 		'comments._id': 0
 	}).exec((err, articles) => {
-		console.log(articles)
 		return res.send({ articles })
 	})
 }
