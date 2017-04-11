@@ -5,11 +5,6 @@ const sendArticlesByAuthor = (author, res) => {
 	console.log(author)
 	Article.aggregate({
 		$match: { author: { $in: author } }
-	}, { $sort: { date: -1 } }, { $limit: 10 }, {
-		$project: {
-			'counter': 0,
-			'comments._id': 0
-		} 
 	}).exec((err, articles) => {
 		if (!articles) {
 			return res.send({ articles: [] })
