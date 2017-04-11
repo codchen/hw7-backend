@@ -1,6 +1,7 @@
 import { Article, Profile, nextCommentId } from './db/model'
 import { isLoggedIn } from './middlewares'
-// Handle all article-related requests
+
+// Send all articles written by one of the authors
 const sendArticlesByAuthor = (author, res) => {
 	console.log(author)
 	Article.aggregate({
@@ -24,6 +25,7 @@ const sendArticlesByAuthor = (author, res) => {
 	})
 }
 
+// Send article by the requested id
 const sendArticleById = (_id, res) => {
 	Article.find({ _id }, {
 		counter: 0,
@@ -33,6 +35,8 @@ const sendArticleById = (_id, res) => {
 	})
 }
 
+// Send all viewable articles of a user (Articles written by himself and his
+// followed users)
 const sendAllFeed = (username, res) => {
 	Profile.findOne({ username })
 		.exec((err, result) => {
@@ -41,6 +45,7 @@ const sendAllFeed = (username, res) => {
 		})
 }
 
+// Edit an article by ID if that article is authored by the requestor
 const editArticle = (postId, author, text, res) => {
 	Article.findOneAndUpdate({ _id: postId, author }, { text })
 		.exec((err, result) => {
@@ -51,6 +56,7 @@ const editArticle = (postId, author, text, res) => {
 		})
 }
 
+// Post a new comment under an article by ID
 const postComment = (postId, author, text, res) => {
 	nextCommentId(postId)
 		.then((commentId) => Article.updateOne({ _id: postId }, {
@@ -64,6 +70,7 @@ const postComment = (postId, author, text, res) => {
 		})
 }
 
+// Edit an existing comment if that comment is authored by the requestor
 const editComment = (postId, commentId, author, text, res) => {
 	Article.findOneAndUpdate({ _id: postId,
 			'comments.commentId': commentId,

@@ -7,6 +7,7 @@ module.exports = {
 	cookieKey,
 	putToSession: (key, val) => sessions[key] = val,
 	deleteFromSession: (key) => delete sessions[key],
+	// Check if user is logged middleware
 	isLoggedIn: (req, res, next) => {
 		const sessionKey = req.cookies[cookieKey]
 		if (sessionKey === undefined) {
@@ -19,6 +20,7 @@ module.exports = {
 		req.params.loggedInUser = user
 		return next()
 	},
+	// Check if CORS request is allowed on the origin
 	cors: (req, res, next) => {
 		res.set({
 			'Access-Control-Allow-Origin': frontend,

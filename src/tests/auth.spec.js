@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import { resource, removeUser } from './testUtils'
 
+// Test authentication-related backend logic
 describe('Test Authentication Schema', () => {
 	const username = 'test-username'
 	const password = 'test-password'

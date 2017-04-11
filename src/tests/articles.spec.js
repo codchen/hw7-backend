@@ -31,6 +31,7 @@ const validateCommentFormat = (comments) => {
 	})
 }
 
+// Test article-related backend logic
 describe('Test Article Schema', () => {
 	const me = 'me'
 	const follower_1 = 'f1'

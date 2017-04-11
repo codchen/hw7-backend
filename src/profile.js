@@ -2,6 +2,7 @@ import { Profile } from './db/model'
 import { isLoggedIn } from './middlewares'
 // Handles all profile-related requests
 
+// DB-query helper functions
 const findByUser = (user, callback) => {
 	Profile.find({ username: user })
 		.exec((err, result) => {

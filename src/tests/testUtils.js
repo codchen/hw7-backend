@@ -2,9 +2,7 @@ import fetch from 'isomorphic-fetch'
 import * as Schema from '../db/model'
 
 // The ajax helper function
-
 let sid
-
 export const resource = (method, endpoint, payload) => {
 	const url = `http://localhost:3000/${endpoint}`
 	const options = { method, headers: { 'Content-Type': 'application/json' }}
@@ -31,6 +29,7 @@ export const resource = (method, endpoint, payload) => {
 		})
 }
 
+// Helper function to clear up testing artifacts
 export const removeUser = (username, done) => {
 	Schema.Auth.remove({ username })
 		.then(() => Schema.Article.remove({ author: username }))

@@ -5,11 +5,13 @@ const md5 = require('md5')
 
 const hashcode = (salt, password) => md5(salt + password)
 
-// Handlers
+// Handler for POST /login
 const login = (req, res) => {
 	if (typeof req.body.username !== 'string' || typeof req.body.password !== 'string') {
 		return res.status(400).send('Bad request')
 	} else {
+		// CHeck if user is already registered
+		// If so get his salted value to compare
 		Auth.find({ username: req.body.username })
 			.exec((err, result) => {
 				if (err) {
@@ -21,6 +23,7 @@ const login = (req, res) => {
 					if (hashcode(result[0].salt, req.body.password) !== result[0].hash) {
 						return res.status(401).send('Password incorrect')
 					} else {
+						// Update session information
 						const sessionKey = md5(Math.random().toString(36) + result[0].username)
 						res.cookie(cookieKey, sessionKey, {
 							maxAge: 3600 * 1000,
@@ -37,6 +40,7 @@ const login = (req, res) => {
 	}
 }
 
+// Handler for POST /register
 const register = (req, res) => {
 	if (typeof req.body.username !== 'string' 
 		|| typeof req.body.password !== 'string'
@@ -47,6 +51,7 @@ const register = (req, res) => {
 	} else {
 		const salt = Math.random().toString(36)
 		const hash = hashcode(salt, req.body.password)
+		// Check if username already existed
 		Auth.findOneAndUpdate({ username: req.body.username }, {
 			$setOnInsert: { salt, hash }}, { upsert: true })
 			.exec((err, result) => {
@@ -72,6 +77,7 @@ const register = (req, res) => {
 	}
 }
 
+// Handler for PUT /logout
 const logout = (req, res) => {
 	const sessionKey = req.cookies[cookieKey]
 	deleteFromSession(sessionKey)
@@ -79,6 +85,7 @@ const logout = (req, res) => {
 	return res.send('OK')
 }
 
+// Handler for PUT /password
 const password = (req, res) => {
 	const result = {
 		username: req.params.loggedInUser,
