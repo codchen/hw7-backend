@@ -7,7 +7,14 @@ const sendArticlesByAuthor = (author, res) => {
 		$match: { author: { $in: author } }
 	}, { $sort: { date: -1 } }, { $limit: 10 }, {
 		$project: {
-			'counter': 1
+			author: 1,
+			text: 1,
+			date: 1,
+			img: 1,
+			'comments.author': 1,
+			'comments.text': 1,
+			'comments.date': 1,
+			'comments.commentId': 1
 		} 
 	}).exec((err, articles) => {
 		if (!articles) {
