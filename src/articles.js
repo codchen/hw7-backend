@@ -106,12 +106,10 @@ const postArticle = (req, res) => {
 		text: req.body.text,
 		author: req.params.loggedInUser
 	}
-	console.log(newArticle)
 	new Article(newArticle).save((err, product) => {
 			if (err) {
 				console.error(err)
 			}
-			console.log(product)
 			const payload = product._doc
 			delete payload['counter']
 			return res.send({ articles: [payload] })
