@@ -26,6 +26,7 @@ module.exports = {
 			'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE',
 			'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Authorization, Content-Type, Accept'
 		})
+		console.log(req.method)
 		if (req.method === 'OPTIONS') {
 			return res.status(200).send('OK')
 		}
