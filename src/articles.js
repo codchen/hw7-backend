@@ -2,6 +2,7 @@ import { Article, Profile, nextCommentId } from './db/model'
 import { isLoggedIn } from './middlewares'
 // Handle all article-related requests
 const sendArticlesByAuthor = (author, res) => {
+	console.log(author)
 	Article.aggregate({
 		$match: { author: { $in: author } }
 	}, { $sort: { date: -1 } }, { $limit: 10 }, {
@@ -27,6 +28,7 @@ const sendArticleById = (_id, res) => {
 }
 
 const sendAllFeed = (username, res) => {
+	console.log('All feeds')
 	Profile.findOne({ username })
 		.exec((err, result) => {
 			sendArticlesByAuthor(
