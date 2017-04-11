@@ -5,12 +5,15 @@ const sendArticlesByAuthor = (author, res) => {
 	console.log(author)
 	Article.aggregate({
 		$match: { author: { $in: author } }
+	}, { $sort: { date: -1 } }, { $limit: 10 }, {
+		$project: {
+			'counter': 0,
+			'comments._id': 0
+		} 
 	}).exec((err, articles) => {
-		console.log(articles)
 		if (!articles) {
 			return res.send({ articles: [] })
 		}
-		console.log('sent')
 		return res.send({ articles })
 	})
 }
@@ -25,7 +28,6 @@ const sendArticleById = (_id, res) => {
 }
 
 const sendAllFeed = (username, res) => {
-	console.log('All feeds')
 	Profile.findOne({ username })
 		.exec((err, result) => {
 			sendArticlesByAuthor(
