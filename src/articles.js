@@ -10,6 +10,7 @@ const sendArticlesByAuthor = (author, res) => {
 		if (!articles) {
 			return res.send({ articles: [] })
 		}
+		console.log('sent')
 		return res.send({ articles })
 	})
 }
