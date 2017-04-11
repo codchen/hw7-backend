@@ -27,7 +27,7 @@ const commentSchema = new mongoose.Schema({
 	author: String,
 	date: { type: Date, default: Date.now },
 	text: String,
-	commentId: { type: Number, index: { unique: true } }
+	commentId: Number
 }, { versionKey: false })
 
 new Counter({ _id: 0, next: 1 }).save()
