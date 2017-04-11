@@ -1,4 +1,4 @@
-const frontend = 'https://hw7-frontend.surge.sh'
+const frontend = '*'
 
 const cookieKey = 'sid'
 const sessions = {}
@@ -24,7 +24,7 @@ module.exports = {
 			'Access-Control-Allow-Origin': frontend,
 			'Access-Control-Allow-Credentials': true,
 			'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE',
-			'Access-Control-Allow-Headers': 'Authorization, Content-Type'
+			'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Authorization, Content-Type, Accept'
 		})
 		if (req.method === 'OPTIONS') {
 			return res.status(200).send('OK')
